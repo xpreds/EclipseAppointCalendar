@@ -1,8 +1,8 @@
 package appoint;
 
 public class OneTime extends Appointment { 
-	public OneTime(int d, int m, int y) {
-		super(d, m, y);
+	public OneTime(int day, int month, int year) {
+		super(day, month, year);
 	}
 
 }
