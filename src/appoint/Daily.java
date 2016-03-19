@@ -1,8 +1,8 @@
 package appoint;
 
 public class Daily extends Appointment { 
-	public Daily(int day, int month, int year) {
-		super(day, month, year);
+	public Daily(int day, int month, int year, String desc) {
+		super(day, month, year, desc);
 	}
 	public boolean occursOn(int day, int month, int year) {
 		if(year > getYear()) {

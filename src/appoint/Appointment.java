@@ -4,11 +4,13 @@ public class Appointment {
 	private int year;
 	private int month;
 	private int day;
+	private String description = "";
 	
-	public Appointment(int day, int month, int year) {
-		day = this.day;
-		month = this.month;
-		year = this.year;
+	public Appointment(int day, int month, int year, String description) {
+		this.day = day;
+		this.month = month;
+		this.year = year;
+		this.description = description;
 	}
 
 	public boolean occursOn(int day, int month, int year) {
@@ -30,6 +32,10 @@ public class Appointment {
 	
 	public int getYear() {
 		return year;
+	}
+	
+	public String toString() {
+		return description;
 	}
 
 }

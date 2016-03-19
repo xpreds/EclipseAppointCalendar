@@ -1,8 +1,8 @@
 package appoint;
 
 public class Monthly extends Appointment { 
-	public Monthly(int day, int month, int year) {
-		super(day, month, year);
+	public Monthly(int day, int month, int year, String desc) {
+		super(day, month, year, desc);
 	}
 
 	public boolean occursOn(int day, int month, int year) {

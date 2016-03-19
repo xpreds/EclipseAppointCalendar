@@ -14,7 +14,7 @@ public class Calendar extends JPanel {
 	
 	public Calendar() {
 		//setLocationRelativeTo(null);
-		setSize(840, 720);
+		setSize(1050, 720);
 		setLayout(new GridLayout(7, 6));
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//setVisible(true);
@@ -38,7 +38,6 @@ public class Calendar extends JPanel {
 	//If matches it means it is not a new one and does nothing. If no match adds that appointment to the appropriate list.
 	public void updateLists() {
 		for(int i = 0; i < 43; i++) {
-			daDays.get(i).resetValues(true, 01, 01, 01, true);
 			int[] dayDate = daDays.get(i).getDate();
 			for(int j = 0; j < oneTimes.size(); j++) {
 				if(oneTimes.get(j).occursOn(dayDate[0], dayDate[1], dayDate[2])) {
@@ -56,6 +55,23 @@ public class Calendar extends JPanel {
 				}
 			}
 		}
+	}
+	
+	//Reset the CalendarDay s according to GregorianCalendar values
+	public void setCalDays() {
+		for(int i = 0; i < 43; i++) {
+			daDays.get(i).resetValues(true, 01, 01, 01, true);
+		}
+	}
+	
+	//Used to check if appointments on a CalendarDay match the ones in the lists
+	public boolean matchAppos(Appointment a, Appointment b) {
+		int[] aDate = a.getDate();
+		int[] bDate = b.getDate();
+		if(a.toString().equals(b.toString()) && aDate == bDate) {
+			return true;
+		}
+		return false;
 	}
 	
 	//This one should call update and refill the CalendarDay list
