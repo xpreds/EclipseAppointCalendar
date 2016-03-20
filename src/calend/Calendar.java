@@ -3,7 +3,6 @@ package calend;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -33,16 +32,18 @@ public class Calendar extends JPanel {
 		}
 		try {
 			Scanner scan = new Scanner(new FileReader("appointmentsData.txt"));
-			int totalAppos = scan.nextInt();
-			scan.nextLine();
-			for(int i = 0; i < totalAppos; i++) {
-				String appoType = scan.next();
-				int appoDay = scan.nextInt();
-				int appoMonth = scan.nextInt();
-				int appoYear = scan.nextInt();
-				String appoDesc = scan.next();
-				addAppointment(appoDay, appoMonth, appoYear, appoDesc, appoType);
+			if(scan.hasNext()) {
+				int totalAppos = scan.nextInt();
 				scan.nextLine();
+				for(int i = 0; i < totalAppos; i++) {
+					String appoType = scan.next();
+					int appoDay = scan.nextInt();
+					int appoMonth = scan.nextInt();
+					int appoYear = scan.nextInt();
+					String appoDesc = scan.next();
+					addAppointment(appoDay, appoMonth, appoYear, appoDesc, appoType);
+					scan.nextLine();
+				}
 			}
 			scan.close();
 		} catch (FileNotFoundException e) {
@@ -58,7 +59,7 @@ public class Calendar extends JPanel {
 			outPut.write(totalAppos + "\n");
 			for(int i = 0; i < oneTimes.size(); i++) {
 				OneTime temp = oneTimes.get(i);
-				String appo = "One Time " + temp.getDay() + " " + temp.getMonth() + " " + temp.getYear() + " " + temp.toString();
+				String appo = "OneTime " + temp.getDay() + " " + temp.getMonth() + " " + temp.getYear() + " " + temp.toString();
 				outPut.write(appo + "\n");
 			}
 			for(int i = 0; i < monthlies.size(); i++) {
@@ -78,7 +79,7 @@ public class Calendar extends JPanel {
 	}
 	
 	public void addAppointment(int d, int m, int y, String desc, String t) {
-		if(t.equals("One Time")) {
+		if(t.equals("OneTime")) {
 			oneTimes.add(new OneTime(d, m, y, desc));
 		} else if(t.equals("Monthly")) {
 			monthlies.add(new Monthly(d, m, y, desc));

@@ -1,11 +1,10 @@
 package calend;
 
 import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JComboBox; //To choose type of Appointment: Onetime, Daily, Monthly
-import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea; //To enter description of appointment
 import javax.swing.SpinnerListModel;
 import javax.swing.JSpinner; //To enter date
@@ -16,22 +15,20 @@ import java.awt.event.ActionEvent;
 import appoint.Daily;
 import appoint.Monthly;
 import appoint.OneTime;
-import appoint.Appointment;
 
-public class detailsFrame extends JFrame {
+public class detailsFrame extends JDialog {
 	public int day;
 	public int month;
 	public int year;
 	public String type;
 	public String desc = "";
-	private Appointment appoint;
 	public detailsFrame(int d, int m, int y) {
 		setSize(400, 450);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		add(new daContainer(d, m));
-		repaint();
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		//repaint();
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}
 	
@@ -55,7 +52,7 @@ public class detailsFrame extends JFrame {
 			descLab.setBounds(190, 5, 195, 40);
 			
 			
-			String[] typeList = new String[] {"One Time", "Monthly", "Daily"};
+			String[] typeList = new String[] {"OneTime", "Monthly", "Daily"};
 			JComboBox typeBox = new JComboBox(typeList);
 			typeBox.setBounds(5, 45, 180, 40);
 			JTextArea descArea = new JTextArea();
@@ -113,7 +110,7 @@ public class detailsFrame extends JFrame {
 	
 	public void addAppointment(int d, int m, int y, String desc, String t) {
 		System.out.println(t + " type used in addappointmetn");
-		if(t.equals("One Time")) {
+		if(t.equals("OnTime")) {
 			Calendar.oneTimes.add(new OneTime(d, m, y, desc));
 		} else if(t.equals("Monthly")) {
 			Calendar.monthlies.add(new Monthly(d, m, y, desc));
