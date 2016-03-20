@@ -27,6 +27,8 @@ public class CalendarDay extends JComponent {
 	private boolean draww = false;
 	private boolean today = false; //If today create a new border or something special to indicate so.
 	private JButton addButton = new JButton("+");
+	private JTextArea texAre = new JTextArea();
+	private JScrollPane scrolPan = null;
 	
 	public CalendarDay(boolean b, int d, int m, int y, boolean t) {
 		setPreferredSize(new Dimension(160, 120));
@@ -36,9 +38,16 @@ public class CalendarDay extends JComponent {
 		year = y;
 		draww = b;
 		today = t;
+		texAre.setEditable(false);
+		appoText();
+		setupComponent();
 	}
 	
 	public void paintComponent(Graphics g) {
+		
+	}
+	
+	public void setupComponent() {
 		addButton.setBounds(2, 2, 150, 28);
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -46,11 +55,7 @@ public class CalendarDay extends JComponent {
 			}
 		});
 		add(addButton, BorderLayout.PAGE_START);
-		
-		JTextArea texAre = new JTextArea();
-		texAre.setEditable(false);
-		texAre.setText(appoText());
-		JScrollPane scrolPan = new JScrollPane(texAre);
+		scrolPan = new JScrollPane(texAre);
 		scrolPan.setPreferredSize(new Dimension(160, 90));
 		add(scrolPan, BorderLayout.CENTER);
 	}
@@ -61,6 +66,7 @@ public class CalendarDay extends JComponent {
 		year = y;
 		draww = b;
 		today = t;
+		appointments.clear();
 	}
 	
 	
@@ -68,12 +74,17 @@ public class CalendarDay extends JComponent {
 		appointments.add(appo);
 	}
 	
-	public String appoText() {
+	public void appoText() {
 		String appoDesc = "";
 		for(int i = 0; i < appointments.size(); i++) {
 			appoDesc = appoDesc + appointments.get(i).toString() + "\n";
 		}
-		return appoDesc;
+		//System.out.println(appointments.size() + " size of appoints in calendarday");
+		//System.out.println(appoDesc + " calendarday appodesc");
+		texAre.setText(appoDesc);
+		scrolPan = new JScrollPane(texAre);
+		scrolPan.setPreferredSize(new Dimension(160, 90));
+		add(scrolPan, BorderLayout.CENTER);
 	}
 	
 	public int[] getDate() {

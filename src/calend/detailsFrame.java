@@ -27,7 +27,6 @@ public class detailsFrame extends JDialog {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		add(new daContainer(d, m));
-		//repaint();
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}
@@ -110,7 +109,7 @@ public class detailsFrame extends JDialog {
 	
 	public void addAppointment(int d, int m, int y, String desc, String t) {
 		System.out.println(t + " type used in addappointmetn");
-		if(t.equals("OnTime")) {
+		if(t.equals("OneTime")) {
 			Calendar.oneTimes.add(new OneTime(d, m, y, desc));
 		} else if(t.equals("Monthly")) {
 			Calendar.monthlies.add(new Monthly(d, m, y, desc));

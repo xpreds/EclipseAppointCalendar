@@ -27,7 +27,7 @@ public class Calendar extends JPanel {
 	//In setup it should read the file and fill the Appointment lists with the info from the file
 	public void setup() {
 		for(int i = 0; i < 43; i++) {
-			daDays.add(new CalendarDay(true, 01, 01, 01, true));
+			daDays.add(new CalendarDay(true, 01, 1, 2016, true));
 			add(daDays.get(i));
 		}
 		try {
@@ -40,16 +40,19 @@ public class Calendar extends JPanel {
 					int appoDay = scan.nextInt();
 					int appoMonth = scan.nextInt();
 					int appoYear = scan.nextInt();
-					String appoDesc = scan.next();
+					String appoDesc = scan.nextLine();
 					addAppointment(appoDay, appoMonth, appoYear, appoDesc, appoType);
-					scan.nextLine();
 				}
+				System.out.println(oneTimes.size() + "onetimes.size()");
+				System.out.println(monthlies.size() + "monthlies.size()");
+				System.out.println(dailies.size() + " dailies.size()");
 			}
 			scan.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		updateLists();
 	}
 	
 	public static void fileWrite() { 
@@ -86,32 +89,49 @@ public class Calendar extends JPanel {
 		} else if(t.equals("Daily")) {
 			dailies.add(new Daily(d, m, y, desc));
 		}
-		Calendar.updateLists();
+		updateLists();
 	}
 	
-	//Each call of update should update the four lists and rewrite the file
-	//Each time a new appointment is added to a CalendarDay, the Calendar gets the appointments of that CalendarDay
-	//and check if an appointment on the CalendarDay object matches any from the three lists up above.
-	//If matches it means it is not a new one and does nothing. If no match adds that appointment to the appropriate list.
 	public static void updateLists() {
 		for(int i = 0; i < 43; i++) {
 			int[] dayDate = daDays.get(i).getDate();
 			for(int j = 0; j < oneTimes.size(); j++) {
 				if(oneTimes.get(j).occursOn(dayDate[0], dayDate[1], dayDate[2])) {
-					daDays.get(i).addAppointment(oneTimes.get(j));
+					boolean didMatch = false;
+					ArrayList<Appointment> tempAppos = daDays.get(i).getAppos();
+					for(int k = 0; k < tempAppos.size(); k++) {
+						didMatch = matchAppos(oneTimes.get(j), tempAppos.get(k));
+					}
+					if(!didMatch) {
+						daDays.get(i).addAppointment(oneTimes.get(j));
+					}
 				}
 			}
 			for(int j = 0; j < monthlies.size(); j++) {
 				if(monthlies.get(j).occursOn(dayDate[0], dayDate[1], dayDate[2])) {
-					daDays.get(i).addAppointment(monthlies.get(j));
+					boolean didMatch = false;
+					ArrayList<Appointment> tempAppos = daDays.get(i).getAppos();
+					for(int k = 0; k < tempAppos.size(); k++) {
+						didMatch = matchAppos(monthlies.get(j), tempAppos.get(k));
+					}
+					if(!didMatch) {
+						daDays.get(i).addAppointment(monthlies.get(j));
+					}
 				}
 			}
 			for(int j = 0; j < dailies.size(); j++) {
 				if(dailies.get(j).occursOn(dayDate[0], dayDate[1], dayDate[2])) {
-					daDays.get(i).addAppointment(dailies.get(j));
+					boolean didMatch = false;
+					ArrayList<Appointment> tempAppos = daDays.get(i).getAppos();
+					for(int k = 0; k < tempAppos.size(); k++) {
+						didMatch = matchAppos(dailies.get(j), tempAppos.get(k));
+					}
+					if(!didMatch) {
+						daDays.get(i).addAppointment(dailies.get(j));
+					}
 				}
 			}
-			daDays.get(i).repaint();
+			daDays.get(i).appoText();
 		}
 	}
 	
@@ -123,7 +143,7 @@ public class Calendar extends JPanel {
 	}
 	
 	//Used to check if appointments on a CalendarDay match the ones in the lists
-	public boolean matchAppos(Appointment a, Appointment b) {
+	public static boolean matchAppos(Appointment a, Appointment b) {
 		int[] aDate = a.getDate();
 		int[] bDate = b.getDate();
 		if(a.toString().equals(b.toString()) && aDate == bDate) {
