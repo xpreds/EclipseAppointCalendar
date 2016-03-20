@@ -5,8 +5,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.BorderLayout;
@@ -41,18 +46,13 @@ public class CalendarDay extends JComponent implements MouseListener {
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				detailsFrame df = new detailsFrame(day, month, year);
-				int appoDay = df.day;
-				int appoMonth = df.month;
-				int appoYear = df.year;
-				String appoDesc = df.desc;
-				addAppointment(appo);
 			}
 		});
 		add(addButton, BorderLayout.PAGE_START);
 		
-		
 		JTextArea texAre = new JTextArea();
 		texAre.setEditable(false);
+		texAre.setText(appoText());
 		JScrollPane scrolPan = new JScrollPane(texAre);
 		scrolPan.setPreferredSize(new Dimension(160, 90));
 		add(scrolPan, BorderLayout.CENTER);
@@ -70,14 +70,13 @@ public class CalendarDay extends JComponent implements MouseListener {
 	public void addAppointment(Appointment appo) {
 		appointments.add(appo);
 	}
-	public void addAppointment(int d, int m, int y, String desc, int t) {
-		if(t == 0) {
-			appoint = new OneTime(d, m, y, desc);
-		} else if(t == 1) {
-			appoint = new Monthly(d, m, y, desc);
-		} else if(t == 2) {
-			appoint = new Daily(d, m, y, desc);
+	
+	public String appoText() {
+		String appoDesc = "";
+		for(int i = 0; i < appointments.size(); i++) {
+			appoDesc = appoDesc + appointments.get(i).toString() + "\n";
 		}
+		return appoDesc;
 	}
 	
 	public int[] getDate() {
