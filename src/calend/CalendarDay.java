@@ -55,6 +55,7 @@ public class CalendarDay extends JComponent {
 			}
 		});
 		add(addButton, BorderLayout.PAGE_START);
+		appoText();
 		scrolPan = new JScrollPane(texAre);
 		scrolPan.setPreferredSize(new Dimension(160, 90));
 		add(scrolPan, BorderLayout.CENTER);
@@ -82,9 +83,9 @@ public class CalendarDay extends JComponent {
 		//System.out.println(appointments.size() + " size of appoints in calendarday");
 		//System.out.println(appoDesc + " calendarday appodesc");
 		texAre.setText(appoDesc);
-		scrolPan = new JScrollPane(texAre);
+		/*scrolPan = new JScrollPane(texAre);
 		scrolPan.setPreferredSize(new Dimension(160, 90));
-		add(scrolPan, BorderLayout.CENTER);
+		add(scrolPan, BorderLayout.CENTER);*/
 	}
 	
 	public int[] getDate() {

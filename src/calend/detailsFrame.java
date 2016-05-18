@@ -40,35 +40,35 @@ public class detailsFrame extends JDialog {
 		}
 		public void paintComponent(Graphics g) {
 			JLabel typeLab = new JLabel("Type");
-			typeLab.setBounds(5, 5, 180, 40);
+			typeLab.setBounds(5, 5, 100, 40);
 			JLabel dayLab = new JLabel("Day");
-			dayLab.setBounds(5, 88, 180, 40);
+			dayLab.setBounds(5, 88, 100, 40);
 			JLabel monthLab = new JLabel("Month");
-			monthLab.setBounds(5, 191, 180, 40);
+			monthLab.setBounds(5, 191, 100, 40);
 			JLabel yearLab = new JLabel("Year");
-			yearLab.setBounds(5, 274, 180, 40);
+			yearLab.setBounds(5, 274, 100, 40);
 			JLabel descLab = new JLabel("Description");
-			descLab.setBounds(190, 5, 195, 40);
+			descLab.setBounds(190, 5, 100, 40);
 			
 			
 			String[] typeList = new String[] {"OneTime", "Monthly", "Daily"};
 			JComboBox typeBox = new JComboBox(typeList);
-			typeBox.setBounds(5, 45, 180, 40);
+			typeBox.setBounds(5, 45, 150, 40);
 			JTextArea descArea = new JTextArea();
 			descArea.setBounds(190, 45, 195, 315);
 			Integer[] days = new Integer[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ,18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31};
 			JComboBox dayBox = new JComboBox(days);
-			dayBox.setBounds(5, 128, 180, 40);
+			dayBox.setBounds(5, 128, 150, 40);
 			dayBox.setSelectedIndex(d-1);
 			String[] months = new String[] {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 			SpinnerListModel monthModel = new SpinnerListModel(months);
 			JSpinner monthSpin = new JSpinner(monthModel);
-			monthSpin.setBounds(5, 231, 180, 40);
+			monthSpin.setBounds(5, 231, 150, 40);
 			((JSpinner.DefaultEditor) monthSpin.getEditor()).getTextField().setEditable(false);
 			monthSpin.setValue(monthConv(m));
 			Integer[] years = new Integer[] {2016, 2017, 2018, 2019, 2020};
 			JComboBox yearBox = new JComboBox(years);
-			yearBox.setBounds(5, 314, 180, 40);
+			yearBox.setBounds(5, 314, 150, 40);
 			yearBox.setSelectedIndex(0);
 			
 			JButton addButton = new JButton("Add Appointment");
@@ -110,15 +110,15 @@ public class detailsFrame extends JDialog {
 	public void addAppointment(int d, int m, int y, String desc, String t) {
 		System.out.println(t + " type used in addappointmetn");
 		if(t.equals("OneTime")) {
-			Calendar.oneTimes.add(new OneTime(d, m, y, desc));
+			CalendarPanel.oneTimes.add(new OneTime(d, m, y, desc));
 		} else if(t.equals("Monthly")) {
-			Calendar.monthlies.add(new Monthly(d, m, y, desc));
+			CalendarPanel.monthlies.add(new Monthly(d, m, y, desc));
 		} else if(t.equals("Daily")) {
-			Calendar.dailies.add(new Daily(d, m, y, desc));
+			CalendarPanel.dailies.add(new Daily(d, m, y, desc));
 		}
-		Calendar.updateLists();
-		System.out.println(Calendar.oneTimes.size() + "onetimes size");
-		Calendar.fileWrite();
+		CalendarPanel.updateLists();
+		System.out.println(CalendarPanel.oneTimes.size() + "onetimes size");
+		CalendarPanel.fileWrite();
 	}
 	
 	public String monthConv(int m) {

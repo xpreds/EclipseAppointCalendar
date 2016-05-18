@@ -11,15 +11,18 @@
 
 package test;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
-import calend.Calendar;
-import calend.CalendarDay;
+import calend.*;
 
 public class CalenderTester {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("The Kaan Calendar");
-		Calendar myCal = new Calendar();
-		frame.add(myCal);
+		CalendarPanel myCal = new CalendarPanel();
+		DatePanel myDate = new DatePanel();
+		frame.getContentPane().add(myCal, BorderLayout.PAGE_END);
+		//frame.getContentPane().add(myDate, BorderLayout.PAGE_START);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();

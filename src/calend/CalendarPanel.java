@@ -12,13 +12,13 @@ import java.util.Scanner;
 
 import appoint.*;
 
-public class Calendar extends JPanel { 
+public class CalendarPanel extends JPanel { 
 	public static ArrayList<OneTime> oneTimes = new ArrayList<OneTime>();
 	public static ArrayList<Monthly> monthlies = new ArrayList<Monthly>();
 	public static ArrayList<Daily> dailies = new ArrayList<Daily>();
 	public static ArrayList<CalendarDay> daDays = new ArrayList<CalendarDay>();
 	
-	public Calendar() {
+	public CalendarPanel() {
 		setSize(1050, 720);
 		setLayout(new GridLayout(7, 6));
 		setup();
@@ -28,8 +28,10 @@ public class Calendar extends JPanel {
 	public void setup() {
 		for(int i = 0; i < 43; i++) {
 			daDays.add(new CalendarDay(true, 01, 1, 2016, true));
-			add(daDays.get(i));
+			add(daDays.get(i));  //This line puts the CalendarDays on this JPanel
 		}
+		//This try catch block reads the appointmentsData.txt file, creates appointments according to the info
+		//and fills up the ArrayLists in this class.
 		try {
 			Scanner scan = new Scanner(new FileReader("appointmentsData.txt"));
 			if(scan.hasNext()) {
@@ -55,6 +57,7 @@ public class Calendar extends JPanel {
 		updateLists();
 	}
 	
+	//This method takes the info from each ArrayList in this class and writes their data to the appointmentsData.txt file
 	public static void fileWrite() { 
 		try {
 			FileWriter outPut = new FileWriter("appointmentsData.txt");
@@ -81,6 +84,7 @@ public class Calendar extends JPanel {
 		}
 	}
 	
+	//This method creates new Appointments in the given type
 	public void addAppointment(int d, int m, int y, String desc, String t) {
 		if(t.equals("OneTime")) {
 			oneTimes.add(new OneTime(d, m, y, desc));
@@ -92,6 +96,7 @@ public class Calendar extends JPanel {
 		updateLists();
 	}
 	
+	//This method updates the CalendarDays according to the info in the lists in this class
 	public static void updateLists() {
 		for(int i = 0; i < 43; i++) {
 			int[] dayDate = daDays.get(i).getDate();
@@ -153,9 +158,9 @@ public class Calendar extends JPanel {
 	}
 	
 	//This one should call update and refill the CalendarDay list
-	public void nextMonth() {}
+	public static void nextMonth() {}
 	
 	//This one should call update and refill the CalendarDay list
-	public void prevMonth() {}
+	public static void prevMonth() {}
 
 }
